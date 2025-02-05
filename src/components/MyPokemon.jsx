@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import PokemonCard from "./PokemonCard.jsx";
+import { RELEASE, MAX_POKEMON_MEMBERS } from "../constants/constants.js";
+import EmptyCard from "./EmptyCard.jsx";
 
 const MyPokemons = styled.div`
     width: 1200px;
@@ -7,36 +10,39 @@ const MyPokemons = styled.div`
     display: grid;
     grid-template-columns: repeat(6, 140px);
     justify-content: space-evenly;
-    background-color: #fdfdf9;
+    background-color: #f3f3f3;
 `;
 
-const MyPokemonsTitle = styled.h1`
+const MyPokemonTitle = styled.h1`
     width: 1200px;
     margin: auto;
     padding-top: 20px;
     text-align: center;
-    background-color: #fdfdf9;
-    font-size: xx-large;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    background-color: #f3f3f3;
+    font-size: x-large;
+    color: #ee5351;
 `;
 
-function MyPokemon() {
-    const style = {
-        width: "140px",
-        height: "210px",
-        backgroundColor: "blue",
-    };
+function MyPokemon({ myPokemons, releaseMyPokemons }) {
+    const emptyCardsNumber = MAX_POKEMON_MEMBERS - myPokemons.length;
+    const dashboard = [...myPokemons, ...Array(emptyCardsNumber).fill(null)];
 
     return (
         <>
-            <MyPokemonsTitle> My Pokemons </MyPokemonsTitle>
+            <MyPokemonTitle> 내 포켓몬 스쿼드 </MyPokemonTitle>
             <MyPokemons>
-                <div style={style}>hello</div>
-                <div style={style}>hello</div>
-                <div style={style}>hello</div>
-                <div style={style}>hello</div>
-                <div style={style}>hello</div>
-                <div style={style}>hello</div>
+                {dashboard.map((data, index) =>
+                    data ? (
+                        <PokemonCard
+                            key={data.id}
+                            pokeData={data}
+                            releaseMyPokemons={releaseMyPokemons}
+                            mode={RELEASE}
+                        />
+                    ) : (
+                        <EmptyCard key={`empty-${index}`} />
+                    )
+                )}
             </MyPokemons>
         </>
     );

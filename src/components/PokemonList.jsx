@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import pokemonData from "../data/PokemonData.js";
+import PokemonCard from "./PokemonCard.jsx";
+import { ADD } from "../constants/constants.js";
 
 const PokemonsList = styled.div`
     width: 1200px;
@@ -11,44 +14,22 @@ const PokemonsList = styled.div`
     justify-content: center;
     justify-items: center;
     align-items: center;
-    background-color: #fdfdf9;
-`
+    background-color: #f3f3f3;
+`;
 
-const style = {
-    width:"140px",
-    height:"210px",
-    backgroundColor:"blue"
-}
-
-function PokemonList() {
+function PokemonList({ addMyPokemons }) {
     return (
         <PokemonsList>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
-            <div style={style}>
-                hello            
-            </div>
+            {pokemonData.map((data) => (
+                <PokemonCard
+                    key={data.id}
+                    pokeData={data}
+                    addMyPokemons={addMyPokemons}
+                    mode={ADD}
+                />
+            ))}
         </PokemonsList>
-    )
+    );
 }
 
 export default PokemonList;
