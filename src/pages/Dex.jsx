@@ -5,6 +5,8 @@ import styled from "styled-components";
 const PokemonDex = styled.div`
     width: 100vw;
     height: 100vh;
+    padding-top: 20px;
+    
     background-color: #ee5351;
 `
 

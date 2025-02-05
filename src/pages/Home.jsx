@@ -10,12 +10,16 @@ const PokedexHome = styled.div`
     background-position: center center;
     background-color: #ee5351;
 `
-const PokedexTitle = styled.p`
+const PokedexTitle = styled.div`
     color: #fdfdf9;
     font-size: xx-large;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     text-align: center;
-    padding-top: 230px;
+    width: 200px;
+    position: absolute;
+    left: 80px;
+    bottom: 160px;
+    transform: translate(-50%, -50%);
 `
 const StartPokedexButton = styled.button`
     position: absolute;
@@ -33,12 +37,12 @@ function Home() {
     const navigate = useNavigate();
     return (
         <PokedexHome>
-            <PokedexTitle> Start Pokedex </PokedexTitle>
+            
             <StartPokedexButton
                 onClick={() => {
                     navigate("/dex");
                 }}
-            />
+            > <PokedexTitle> Start Pokedex </PokedexTitle> </StartPokedexButton>
         </PokedexHome>
     );
 }
