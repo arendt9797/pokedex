@@ -3,6 +3,7 @@ import GlobalStyle from "../style/globalStyle.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import pokeData from "../data/PokemonData.js";
 import typeData from "../data/TypeData.js";
+import { MAX_POKEMON_MEMBERS, STORAGE_KEY } from "../constants/constants.js";
 
 const PokeDetail = styled.div`
     width: 800px;
@@ -84,11 +85,27 @@ const DetailDescriptionGrid = styled.p`
     position: relative;
     cursor: default;
 `;
-const Button = styled.button`
+const BackButton = styled.button`
     width: 80px;
     height: 30px;
     position: absolute;
     right: 30px;
+    bottom: 20px;
+    color: #ee5351;
+    background-color: #eeeeee;
+    border: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: #cfcfcf;
+    }
+`;
+const CatchButton = styled.button`
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    right: 120px;
     bottom: 20px;
     color: white;
     background-color: #ee5351;
@@ -115,6 +132,19 @@ function Detail() {
     const pokeTypes = targetPokemon.types;
     const pokeDescription = targetPokemon.description;
 
+    // 독립적인 페이지라 Dex 페이지의 setMyPokemons를 사용할 수 없다..
+    // prop drilling 방식의 문제점
+    const catchMyPokemonHandler = () => {
+        // 억지로 localStorage에 추가해보자
+        let myPokemons = localStorage.getItem(STORAGE_KEY)
+        myPokemons = JSON.parse(myPokemons)
+        myPokemons.length < MAX_POKEMON_MEMBERS
+            ? myPokemons.some((data) => data.id === Number(pokeId))
+                ? alert("same pokemon!")
+                : localStorage.setItem(STORAGE_KEY, JSON.stringify([...myPokemons, targetPokemon]))
+            : alert("too many!");
+    }
+
     return (
         <>
             <GlobalStyle />
@@ -140,13 +170,16 @@ function Detail() {
                 <DetailDescriptionGrid>
                     {pokeDescription}
                     {/* dex 페이지로 돌아가기 */}
-                    <Button
+                    <CatchButton
+                        onClick={catchMyPokemonHandler}
+                    >{"잡기"}</CatchButton>
+                    <BackButton
                         onClick={() => {
                             navigate("/dex");
                         }}
                     >
                         {"돌아가기"}
-                    </Button>
+                    </BackButton>
                 </DetailDescriptionGrid>
             </PokeDetail>
         </>

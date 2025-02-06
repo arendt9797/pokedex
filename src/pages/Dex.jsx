@@ -1,12 +1,12 @@
-import { useState } from "react";
 import MyPokemon from "../components/MyPokemon";
 import PokemonList from "../components/PokemonList";
-import { MAX_POKEMON_MEMBERS } from "../constants/constants";
+import { MAX_POKEMON_MEMBERS, STORAGE_KEY } from "../constants/constants";
 import GlobalStyle from "../style/globalStyle";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function Dex() {
-    // 내가 잡은 포켓몬 배열을 상태로 지정
-    const [myPokemons, setMyPokemons] = useState([]);
+    // 내가 잡은 포켓몬 배열을 상태와 로컬스토리지로 관리
+    const [myPokemons, setMyPokemons] = useLocalStorage(STORAGE_KEY, [])
 
     // 내 포켓몬 추가 핸들러
     const catchMyPokemonsHandler = (pokemon) => {
