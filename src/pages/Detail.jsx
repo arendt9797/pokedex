@@ -1,9 +1,8 @@
-import pokeData from "../data/PokemonData.js";
-import typeData from "../data/TypeData.js";
 import styled from "styled-components";
 import GlobalStyle from "../style/globalStyle.jsx";
-import { useLocation } from "react-router-dom";
-import TYPE_DATA from "../data/TypeData.js";
+import { useLocation, useNavigate } from "react-router-dom";
+import pokeData from "../data/PokemonData.js";
+import typeData from "../data/TypeData.js";
 
 const PokeDetail = styled.div`
     width: 800px;
@@ -43,6 +42,7 @@ const DetailNameGrid = styled.div`
     display: flex;
     align-items: center;
     border-radius: 10px;
+    cursor: default;
 `;
 const DetailId = styled.div`
     width: 70px;
@@ -64,15 +64,16 @@ const DetailTypeGrid = styled.div`
     border-radius: 10px;
     display: flex;
     align-items: center;
+    cursor: default;
 `;
 const DetailType = styled.div`
     width: 50px;
     margin-right: 10px;
     padding: 6px;
     border-radius: 5px;
-    background-color: ${({color}) => color};
+    background-color: ${({ color }) => color};
     color: white;
-    text-align:center;
+    text-align: center;
 `;
 const DetailDescriptionGrid = styled.p`
     grid-area: description;
@@ -80,9 +81,28 @@ const DetailDescriptionGrid = styled.p`
     border-radius: 10px;
     padding: 20px;
     line-height: 24px;
+    position: relative;
+    cursor: default;
+`;
+const Button = styled.button`
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    color: white;
+    background-color: #ee5351;
+    border: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: #e73a37;
+    }
 `;
 
 function Detail() {
+    const navigate = useNavigate();
     const location = useLocation();
     const pokeId = new URLSearchParams(location.search).get("id");
     const targetPokemon = pokeData.find((data) => data.id === Number(pokeId));
@@ -100,17 +120,29 @@ function Detail() {
                     <DetailImg src={pokeImg} alt="pokemonImg" />
                 </DetailImgGrid>
                 <DetailNameGrid>
-                    <DetailId> No.{pokeId} </DetailId>
+                    <DetailId> {`No.${pokeId}`} </DetailId>
                     <DetailName>{pokeName}</DetailName>
                 </DetailNameGrid>
                 <DetailTypeGrid>
-                    {
-                        pokeTypes.map((type) => (
-                            <DetailType key={crypto.randomUUID()} color={TYPE_DATA[type]}>{type}</DetailType>
-                        ))
-                    }
+                    {pokeTypes.map((type) => (
+                        <DetailType
+                            key={crypto.randomUUID()}
+                            color={typeData[type]}
+                        >
+                            {type}
+                        </DetailType>
+                    ))}
                 </DetailTypeGrid>
-                <DetailDescriptionGrid>{pokeDescription}</DetailDescriptionGrid>
+                <DetailDescriptionGrid>
+                    {pokeDescription}
+                    <Button
+                        onClick={() => {
+                            navigate("/dex");
+                        }}
+                    >
+                        {"돌아가기"}
+                    </Button>
+                </DetailDescriptionGrid>
             </PokeDetail>
         </>
     );
