@@ -104,6 +104,9 @@ const Button = styled.button`
 function Detail() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    // id를 이용해 detail 페이지에 표시할 포켓몬 데이터 찾기
+    // 쿼리 스트링으로 전달했으므로 URLSearchParams()를 이용하여 id를 찾는다.
     const pokeId = new URLSearchParams(location.search).get("id");
     const targetPokemon = pokeData.find((data) => data.id === Number(pokeId));
 
@@ -124,6 +127,7 @@ function Detail() {
                     <DetailName>{pokeName}</DetailName>
                 </DetailNameGrid>
                 <DetailTypeGrid>
+                    {/* 포켓몬 타입 컴포넌트를 반복문으로 표시 */}
                     {pokeTypes.map((type) => (
                         <DetailType
                             key={crypto.randomUUID()}
@@ -135,6 +139,7 @@ function Detail() {
                 </DetailTypeGrid>
                 <DetailDescriptionGrid>
                     {pokeDescription}
+                    {/* dex 페이지로 돌아가기 */}
                     <Button
                         onClick={() => {
                             navigate("/dex");

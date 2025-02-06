@@ -20,6 +20,7 @@ const PokemonsList = styled.div`
 function PokemonList({ catchMyPokemons }) {
     return (
         <PokemonsList>
+            {/* 포켓몬 데이터를 이용해 포켓몬 리스트 표시 */}
             {pokemonData.map((data) => (
                 <PokemonCard
                     key={data.id}
