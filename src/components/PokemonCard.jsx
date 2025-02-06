@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ADD } from "../constants/constants.js";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
     width: 140px;
@@ -47,20 +48,28 @@ const Button = styled.button`
     }
 `;
 
-function PokemonCard({ pokeData, addMyPokemons, releaseMyPokemons, mode }) {
+function PokemonCard({ pokeData, catchMyPokemons, releaseMyPokemons, mode }) {
     const imgUrl = pokeData.img_url;
     const koreanName = pokeData.korean_name;
     const pokeId = pokeData.id;
-    const clickHandler = () => {
-        mode === ADD ? addMyPokemons(pokeData) : releaseMyPokemons(pokeId);
-    };
 
+    const navigate = useNavigate()
+    
+    const catchReleaseHandler = () => {
+        mode === ADD ? catchMyPokemons(pokeData) : releaseMyPokemons(pokeId);
+    };
+    
     return (
-        <Card>
+        <Card onClick={()=>{
+            navigate(`/detail?id=${pokeId}`)
+        }}>
             <PokemonImage src={imgUrl} />
             <PokemonName>{koreanName}</PokemonName>
             <PokemonNumber>No. {String(pokeId).padStart(3, "0")}</PokemonNumber>
-            <Button onClick={clickHandler}>
+            <Button onClick={(e) => {
+                e.stopPropagation()
+                catchReleaseHandler()
+            }}>
                 {mode === ADD ? "잡기" : "놔주기"}
             </Button>
         </Card>

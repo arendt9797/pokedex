@@ -17,14 +17,14 @@ const PokemonsList = styled.div`
     background-color: #f3f3f3;
 `;
 
-function PokemonList({ addMyPokemons }) {
+function PokemonList({ catchMyPokemons }) {
     return (
         <PokemonsList>
             {pokemonData.map((data) => (
                 <PokemonCard
                     key={data.id}
                     pokeData={data}
-                    addMyPokemons={addMyPokemons}
+                    catchMyPokemons={catchMyPokemons}
                     mode={ADD}
                 />
             ))}
