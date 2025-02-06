@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import pokeData from "../data/PokemonData.js";
 import typeData from "../data/TypeData.js";
 import { MAX_POKEMON_MEMBERS, STORAGE_KEY } from "../constants/constants.js";
+import { toast } from "react-toastify";
 
 const PokeDetail = styled.div`
     width: 800px;
@@ -132,18 +133,25 @@ function Detail() {
     const pokeTypes = targetPokemon.types;
     const pokeDescription = targetPokemon.description;
 
+    const toastError = (text) => toast.error(text);
+    const toastInfo = (text) => toast.info(text);
+
     // 독립적인 페이지라 Dex 페이지의 setMyPokemons를 사용할 수 없다..
     // prop drilling 방식의 문제점
     const catchMyPokemonHandler = () => {
         // 억지로 localStorage에 추가해보자
-        let myPokemons = localStorage.getItem(STORAGE_KEY)
-        myPokemons = JSON.parse(myPokemons)
+        let myPokemons = localStorage.getItem(STORAGE_KEY);
+        myPokemons = JSON.parse(myPokemons);
         myPokemons.length < MAX_POKEMON_MEMBERS
             ? myPokemons.some((data) => data.id === Number(pokeId))
-                ? alert("same pokemon!")
-                : localStorage.setItem(STORAGE_KEY, JSON.stringify([...myPokemons, targetPokemon]))
-            : alert("too many!");
-    }
+                ? toastError("이미 내 포켓몬이야")
+                : (toastInfo(`${pokeName}, 넌 내꺼야!`),
+                  localStorage.setItem(
+                      STORAGE_KEY,
+                      JSON.stringify([...myPokemons, targetPokemon])
+                  ))
+            : toastError("더는 잡을 수 없어!");
+    };
 
     return (
         <>
@@ -170,9 +178,9 @@ function Detail() {
                 <DetailDescriptionGrid>
                     {pokeDescription}
                     {/* dex 페이지로 돌아가기 */}
-                    <CatchButton
-                        onClick={catchMyPokemonHandler}
-                    >{"잡기"}</CatchButton>
+                    <CatchButton onClick={catchMyPokemonHandler}>
+                        {"잡기"}
+                    </CatchButton>
                     <BackButton
                         onClick={() => {
                             navigate("/dex");

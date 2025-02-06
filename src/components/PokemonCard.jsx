@@ -53,26 +53,36 @@ function PokemonCard({ pokeData, catchMyPokemons, releaseMyPokemons, mode }) {
     const koreanName = pokeData.korean_name;
     const pokeId = pokeData.id;
 
-    const navigate = useNavigate()
-    
+    const navigate = useNavigate();
+
     const catchReleaseHandler = () => {
-        mode === ADD ? catchMyPokemons(pokeData) : releaseMyPokemons(pokeId);
+        mode === ADD
+            ? catchMyPokemons(pokeData, koreanName)
+            : releaseMyPokemons(pokeId, koreanName);
     };
-    
+
     return (
-        <Card onClick={()=>{
-            navigate(`/detail?id=${pokeId}`)
-        }}>
-            <PokemonImage src={imgUrl} />
-            <PokemonName>{koreanName}</PokemonName>
-            <PokemonNumber>No. {String(pokeId).padStart(3, "0")}</PokemonNumber>
-            <Button onClick={(e) => {
-                e.stopPropagation()
-                catchReleaseHandler()
-            }}>
-                {mode === ADD ? "잡기" : "놔주기"}
-            </Button>
-        </Card>
+        <>
+            <Card
+                onClick={() => {
+                    navigate(`/detail?id=${pokeId}`);
+                }}
+            >
+                <PokemonImage src={imgUrl} />
+                <PokemonName>{koreanName}</PokemonName>
+                <PokemonNumber>
+                    No. {String(pokeId).padStart(3, "0")}
+                </PokemonNumber>
+                <Button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        catchReleaseHandler();
+                    }}
+                >
+                    {mode === ADD ? "잡기" : "놔주기"}
+                </Button>
+            </Card>
+        </>
     );
 }
 
