@@ -4,12 +4,12 @@ import PokemonCard from "./PokemonCard.jsx";
 import { ADD } from "../constants/constants.js";
 
 const PokemonsList = styled.div`
-    width: 1200px;
+    width: 90%;
     margin: auto;
     margin-top: 20px;
-    padding: 20px 0;
+    padding: 20px;
     display: grid;
-    grid-template-columns: repeat(7, 140px);
+    grid-template-columns: repeat(auto-fill, 140px);
     gap: 20px;
     justify-content: center;
     justify-items: center;
