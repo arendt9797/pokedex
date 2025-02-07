@@ -32,7 +32,7 @@ const MyPokemonTitle = styled.h1`
 
 function MyPokemon() {
     const { myPokemons } = useContext(PokemonContext)
-    
+
     // 내 포켓몬이 6마리보다 적을 경우 빈자리에 빈 카드를 표시한다.
     const emptyCardsNumber = MAX_POKEMON_MEMBERS - myPokemons.length;
     const dashboard = [...myPokemons, ...Array(emptyCardsNumber).fill(null)];
@@ -43,6 +43,7 @@ function MyPokemon() {
             <MyPokemons>
                 {dashboard.map((data, index) =>
                     // 데이터가 있을 경우 해당 포켓몬 카드를, 없을 경우 빈 카드를 표시
+                    // pokeData와 mode는 context로 관리하기 어렵다.
                     data ? (
                         <PokemonCard
                             key={data.id}

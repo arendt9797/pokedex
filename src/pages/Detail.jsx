@@ -122,6 +122,7 @@ const CatchButton = styled.button`
 `;
 
 function Detail() {
+    // context를 사용하면 별개의 페이지에서도 문제없이 상태를 사용할 수 있다.
     const { catchMyPokemonsHandler } = useContext(PokemonContext);
 
     const navigate = useNavigate();

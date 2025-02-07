@@ -3,8 +3,12 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { MAX_POKEMON_MEMBERS, STORAGE_KEY } from "../constants/constants";
 import { toast } from "react-toastify";
 
+// Context 생성
 const PokemonContext = createContext(null);
 
+// Provider 컴포넌트를 사용하면 책임 분담 의미도 있고
+// 다른 컴포넌트에서도 동일한 context를 사용할 수 있어 재사용성이 증가한다.
+// 이번 과제에서는 Router 컴포넌트를 감쌌기 때문에 재사용할 일은 없다
 function PokemonProvider({ children }) {
     const [myPokemons, setMyPokemons] = useLocalStorage(STORAGE_KEY, []);
 

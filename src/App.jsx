@@ -31,6 +31,7 @@ const CustomedToast = styled(ToastContainer).attrs({
 function App() {
     return (
         <>
+            {/* Router를 Provider 컴포넌트로 감싸 Context를 적용한다. */}
             <PokemonProvider>
                 <Router />
             </PokemonProvider>

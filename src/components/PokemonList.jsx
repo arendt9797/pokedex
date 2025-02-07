@@ -21,6 +21,7 @@ function PokemonList() {
     return (
         <PokemonsList>
             {/* 포켓몬 데이터를 이용해 포켓몬 리스트 표시 */}
+            {/* pokeData와 mode는 context로 관리하기 어렵다 */}
             {pokemonData.map((data) => (
                 <PokemonCard
                     key={data.id}
