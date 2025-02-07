@@ -17,7 +17,7 @@ const PokemonsList = styled.div`
     background-color: #f3f3f3;
 `;
 
-function PokemonList({ catchMyPokemons }) {
+function PokemonList() {
     return (
         <PokemonsList>
             {/* 포켓몬 데이터를 이용해 포켓몬 리스트 표시 */}
@@ -25,7 +25,6 @@ function PokemonList({ catchMyPokemons }) {
                 <PokemonCard
                     key={data.id}
                     pokeData={data}
-                    catchMyPokemons={catchMyPokemons}
                     mode={ADD}
                 />
             ))}

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { ADD } from "../constants/constants.js";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { PokemonContext } from "../context/PokemonProvider.jsx";
 
 const Card = styled.div`
     width: 140px;
@@ -49,19 +51,21 @@ const Button = styled.button`
     }
 `;
 
-function PokemonCard({ pokeData, catchMyPokemons, releaseMyPokemons, mode }) {
+function PokemonCard({ pokeData, mode }) {
+    const { releaseMyPokemonsHandler, catchMyPokemonsHandler } = useContext(PokemonContext);
+
     const imgUrl = pokeData.img_url;
     const koreanName = pokeData.korean_name;
     const pokeId = pokeData.id;
 
-    const navigate = useNavigate();
-
     const catchReleaseHandler = () => {
         mode === ADD
-            ? catchMyPokemons(pokeData, koreanName)
-            : releaseMyPokemons(pokeId, koreanName);
+        ? catchMyPokemonsHandler(pokeData, koreanName)
+        : releaseMyPokemonsHandler(pokeId, koreanName);
     };
 
+    const navigate = useNavigate();
+    
     return (
         <>
             <Card

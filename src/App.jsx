@@ -1,6 +1,7 @@
 import { Slide, ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import Router from "./router/Router";
+import { PokemonProvider } from "./context/PokemonProvider";
 
 // 토스트는 루트에 위치하는 것이 좋다
 const CustomedToast = styled(ToastContainer).attrs({
@@ -30,7 +31,9 @@ const CustomedToast = styled(ToastContainer).attrs({
 function App() {
     return (
         <>
-            <Router />
+            <PokemonProvider>
+                <Router />
+            </PokemonProvider>
             <CustomedToast />
         </>
     );
