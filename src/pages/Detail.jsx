@@ -133,9 +133,6 @@ function Detail() {
     const pokeTypes = targetPokemon.types;
     const pokeDescription = targetPokemon.description;
 
-    const toastError = (text) => toast.error(text);
-    const toastInfo = (text) => toast.info(text);
-
     // 독립적인 페이지라 Dex 페이지의 setMyPokemons를 사용할 수 없다..
     // prop drilling 방식의 문제점
     const catchMyPokemonHandler = () => {
@@ -144,13 +141,13 @@ function Detail() {
         myPokemons = JSON.parse(myPokemons);
         myPokemons.length < MAX_POKEMON_MEMBERS
             ? myPokemons.some((data) => data.id === Number(pokeId))
-                ? toastError("이미 내 포켓몬이야")
-                : (toastInfo(`${pokeName}, 넌 내꺼야!`),
+                ? toast.error("이미 내 포켓몬이야")
+                : (toast.info(`${pokeName}, 넌 내꺼야!`),
                   localStorage.setItem(
                       STORAGE_KEY,
                       JSON.stringify([...myPokemons, targetPokemon])
                   ))
-            : toastError("더는 잡을 수 없어!");
+            : toast.error("더는 잡을 수 없어!");
     };
 
     return (
