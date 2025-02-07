@@ -97,6 +97,7 @@ const BackButton = styled.button`
     border: transparent;
     cursor: pointer;
     transition: all 0.3s;
+    border-radius: 5px;
 
     &:hover {
         background-color: #cfcfcf;
@@ -113,6 +114,7 @@ const CatchButton = styled.button`
     border: transparent;
     cursor: pointer;
     transition: all 0.3s;
+    border-radius: 5px;
 
     &:hover {
         background-color: #e73a37;
