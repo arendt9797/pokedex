@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import pokeData from "../data/PokemonData.js";
 import typeData from "../data/TypeData.js";
 import { useCatchPokemon } from "../hooks/useCatchPokemon.jsx";
+import { useSelector } from "react-redux";
+import { useReleasePokemon } from "../hooks/useReleasePokemon.jsx";
 
 const PokeDetail = styled.div`
     width: 800px;
@@ -121,14 +123,16 @@ const CatchButton = styled.button`
 `;
 
 function Detail() {
-    const catchMyPokemonHandler = useCatchPokemon()
+    const myPokemons = useSelector((state) => state.myPokemons);
+    const catchMyPokemonHandler = useCatchPokemon();
+    const releaseMyPokemonHandler = useReleasePokemon();
 
     const navigate = useNavigate();
     const location = useLocation();
 
     // id를 이용해 detail 페이지에 표시할 포켓몬 데이터 찾기
     // 쿼리 스트링으로 전달했으므로 URLSearchParams()를 이용하여 id를 찾는다.
-    const pokeId = new URLSearchParams(location.search).get("id");
+    const pokeId = parseInt(new URLSearchParams(location.search).get("id"));
     const targetPokemon = pokeData.find((data) => data.id === Number(pokeId));
 
     const pokeImg = targetPokemon.img_url;
@@ -160,10 +164,24 @@ function Detail() {
                 </DetailTypeGrid>
                 <DetailDescriptionGrid>
                     {pokeDescription}
+                    {myPokemons.some((pokemon) => pokemon.id === pokeId) ? (
+                        <CatchButton
+                            onClick={() =>
+                                releaseMyPokemonHandler(pokeId, pokeName)
+                            }
+                        >
+                            {"놔주기"}
+                        </CatchButton>
+                    ) : (
+                        <CatchButton
+                            onClick={() =>
+                                catchMyPokemonHandler(targetPokemon)
+                            }
+                        >
+                            {"잡기"}
+                        </CatchButton>
+                    )}
                     {/* dex 페이지로 돌아가기 */}
-                    <CatchButton onClick={() => catchMyPokemonHandler(targetPokemon, pokeName)}>
-                        {"잡기"}
-                    </CatchButton>
                     <BackButton
                         onClick={() => {
                             navigate("/dex");

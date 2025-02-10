@@ -20,7 +20,7 @@ export const useCatchPokemon = () => {
             return;
         }
 
-        if (myPokemons.some((data) => data?.id === pokemon.id)) {
+        if (myPokemons.some((data) => data.id === pokemon.id)) {
             toast.error("이미 내 포켓몬이야");
             return;
         }

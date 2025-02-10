@@ -54,8 +54,8 @@ const Button = styled.button`
 function PokemonCard({ pokeData, mode }) {
     // 훅은 항상 컴포넌트 최상단에 위치해야 함
     // 따라서 먼저 이렇게 할당 후 조건문을 사용해야한다.
-    const catchHandler = useCatchPokemon();
-    const releaseHandler = useReleasePokemon();
+    const catchMyPokemonHandler = useCatchPokemon();
+    const releaseMyPokemonHandler = useReleasePokemon();
 
     const pokeImg = pokeData.img_url;
     const pokeName = pokeData.korean_name;
@@ -79,8 +79,8 @@ function PokemonCard({ pokeData, mode }) {
                     onClick={(e) => {
                         e.stopPropagation();
                         mode === ADD
-                            ? catchHandler(pokeData)
-                            : releaseHandler(pokeId, pokeName);
+                            ? catchMyPokemonHandler(pokeData)
+                            : releaseMyPokemonHandler(pokeId, pokeName);
                     }}
                 >
                     {mode === ADD ? "잡기" : "놔주기"}
