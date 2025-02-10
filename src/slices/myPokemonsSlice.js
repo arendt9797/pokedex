@@ -7,6 +7,7 @@ const myPokemonsSlice = createSlice({
     reducers: {
         catchMyPokemons: (state, action) => {
             state.push(action.pokemon)
+            console.log('state =====>', state);
         },
         releaseMyPokemons: (state, action) => {
             state = state.filter((pokemon) => pokemon.id !== action.pokemonId)

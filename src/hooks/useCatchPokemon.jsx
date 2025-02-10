@@ -15,12 +15,14 @@ export const useCatchPokemon = () => {
     }, [myPokemons]);
 
     const handleCatchPokemon = (pokemon, pokemonName) => {
+        console.log('pokemon =====>', pokemon);
+        console.log('myPokemons =====>', myPokemons);
         if (myPokemons.length >= MAX_POKEMON_MEMBERS) {
             toast.error("더는 잡을 수 없어!");
             return;
         }
 
-        if (myPokemons.some((data) => data.id === pokemon.id)) {
+        if (myPokemons.some((data) => data?.id === pokemon.id)) {
             toast.error("이미 내 포켓몬이야");
             return;
         }
