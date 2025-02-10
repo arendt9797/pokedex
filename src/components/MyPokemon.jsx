@@ -2,8 +2,7 @@ import styled from "styled-components";
 import PokemonCard from "./PokemonCard.jsx";
 import { RELEASE, MAX_POKEMON_MEMBERS } from "../constants/constants.js";
 import EmptyCard from "./EmptyCard.jsx";
-import { useContext } from "react";
-import { PokemonContext } from "../context/PokemonProvider.jsx";
+import { useSelector } from "react-redux";
 
 const MyPokemons = styled.div`
     width: 90%;
@@ -31,7 +30,7 @@ const MyPokemonTitle = styled.h1`
 `;
 
 function MyPokemon() {
-    const { myPokemons } = useContext(PokemonContext)
+    const myPokemons = useSelector((state) => state.myPokemons)
 
     // 내 포켓몬이 6마리보다 적을 경우 빈자리에 빈 카드를 표시한다.
     const emptyCardsNumber = MAX_POKEMON_MEMBERS - myPokemons.length;

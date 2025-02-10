@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { ADD } from "../constants/constants.js";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { PokemonContext } from "../context/PokemonProvider.jsx";
+import { useCatchPokemon } from "../hooks/useCatchPokemon.jsx";
+import { useReleasePokemon } from "../hooks/useReleasePokemon.jsx";
 
 const Card = styled.div`
     width: 140px;
@@ -52,17 +52,12 @@ const Button = styled.button`
 `;
 
 function PokemonCard({ pokeData, mode }) {
-    const { releaseMyPokemonsHandler, catchMyPokemonsHandler } = useContext(PokemonContext);
-
     const imgUrl = pokeData.img_url;
     const koreanName = pokeData.korean_name;
     const pokeId = pokeData.id;
 
-    const catchReleaseHandler = () => {
-        mode === ADD
-        ? catchMyPokemonsHandler(pokeData, koreanName)
-        : releaseMyPokemonsHandler(pokeId, koreanName);
-    };
+    const catchHandler = useCatchPokemon()
+    const releaseHandler = useReleasePokemon()
 
     const navigate = useNavigate();
     
@@ -81,7 +76,9 @@ function PokemonCard({ pokeData, mode }) {
                 <Button
                     onClick={(e) => {
                         e.stopPropagation();
-                        catchReleaseHandler();
+                        mode === ADD
+                            ? catchHandler(pokeData, koreanName)
+                            : releaseHandler(pokeId, koreanName)
                     }}
                 >
                     {mode === ADD ? "잡기" : "놔주기"}

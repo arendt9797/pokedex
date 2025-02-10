@@ -3,8 +3,7 @@ import GlobalStyle from "../style/globalStyle.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import pokeData from "../data/PokemonData.js";
 import typeData from "../data/TypeData.js";
-import { useContext } from "react";
-import { PokemonContext } from "../context/PokemonProvider.jsx";
+import { useCatchPokemon } from "../hooks/useCatchPokemon.jsx";
 
 const PokeDetail = styled.div`
     width: 800px;
@@ -122,8 +121,7 @@ const CatchButton = styled.button`
 `;
 
 function Detail() {
-    // context를 사용하면 별개의 페이지에서도 문제없이 상태를 사용할 수 있다.
-    const { catchMyPokemonsHandler } = useContext(PokemonContext);
+    const catchMyPokemonHandler = useCatchPokemon()
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -163,7 +161,7 @@ function Detail() {
                 <DetailDescriptionGrid>
                     {pokeDescription}
                     {/* dex 페이지로 돌아가기 */}
-                    <CatchButton onClick={() => catchMyPokemonsHandler(targetPokemon, pokeName)}>
+                    <CatchButton onClick={() => catchMyPokemonHandler(targetPokemon, pokeName)}>
                         {"잡기"}
                     </CatchButton>
                     <BackButton
