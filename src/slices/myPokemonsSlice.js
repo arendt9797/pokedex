@@ -6,14 +6,15 @@ const myPokemonsSlice = createSlice({
     initialState: getFromLocalStorage(),
     reducers: {
         catchMyPokemons: (state, action) => {
-            state.push(action.pokemon)
-            console.log('state =====>', state);
+            state.push(action.payload)
         },
         releaseMyPokemons: (state, action) => {
-            state = state.filter((pokemon) => pokemon.id !== action.pokemonId)
+            return state.filter((pokemon) => pokemon.id !== action.payload)
         }
     }
 })
 
+// 액션 생성자 역할을 하는 .actions
 export const { catchMyPokemons, releaseMyPokemons } = myPokemonsSlice.actions
+// 리듀서를 생산하는 .reducer
 export default myPokemonsSlice.reducer
