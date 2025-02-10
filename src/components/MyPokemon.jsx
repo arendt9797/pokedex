@@ -31,6 +31,7 @@ const MyPokemonTitle = styled.h1`
 
 function MyPokemon() {
     const myPokemons = useSelector((state) => state.myPokemons)
+    console.log('myPokemons =====>', myPokemons);
 
     // 내 포켓몬이 6마리보다 적을 경우 빈자리에 빈 카드를 표시한다.
     const emptyCardsNumber = MAX_POKEMON_MEMBERS - myPokemons.length;

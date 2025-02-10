@@ -52,12 +52,14 @@ const Button = styled.button`
 `;
 
 function PokemonCard({ pokeData, mode }) {
+    // 훅은 항상 컴포넌트 최상단에 위치해야 함
+    // 따라서 먼저 이렇게 할당 후 조건문을 사용해야한다.
+    const catchHandler = useCatchPokemon()
+    const releaseHandler = useReleasePokemon()
+
     const imgUrl = pokeData.img_url;
     const koreanName = pokeData.korean_name;
     const pokeId = pokeData.id;
-
-    const catchHandler = useCatchPokemon()
-    const releaseHandler = useReleasePokemon()
 
     const navigate = useNavigate();
     
